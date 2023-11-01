@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/module/access_page/view/access_page.dart';
-import 'package:food_app/module/network_communication/no_internet_page/view/NoInternetPage.dart';
 import 'package:food_app/module/network_communication/bloc/connectivity_bloc/check_connectivity_bloc.dart';
 
 class SplashScreen extends StatefulWidget {

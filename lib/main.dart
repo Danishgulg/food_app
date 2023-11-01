@@ -1,7 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/data/colors/app_color.dart';
+import 'package:food_app/firebase_options.dart';
 import 'package:food_app/module/customer/home/bloc/home_food_tab_bloc.dart';
+import 'package:food_app/module/customer/sign_up/bloc/PasswordField/password_field_bloc.dart';
+import 'package:food_app/module/customer/sign_up/bloc/check_password/check_password_field_bloc.dart';
 import 'package:food_app/module/network_communication/bloc/connectivity_bloc/check_connectivity_bloc.dart';
 import 'package:food_app/module/splash_screen_page/view/splash_screen.dart';
 import 'package:food_app/navigation/app_navigation.dart';
@@ -10,6 +14,8 @@ import 'package:food_app/navigation/app_navigation.dart';
 // Color.fromARGB(255, 4, 23, 38)
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -26,9 +32,17 @@ class MyApp extends StatelessWidget {
         ),
 
         // home module
-        
+
         BlocProvider(
           create: (context) => HomeFoodTabBloc(),
+        ),
+
+        BlocProvider(
+          create: (context) => CheckPasswordFieldBloc(),
+        ),
+
+        BlocProvider(
+          create: (context) => PasswordFieldBloc(),
         )
       ],
       child: MaterialApp(
@@ -36,6 +50,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
           useMaterial3: true,
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColor.cursorColor,
+            selectionColor: AppColor.cursorColor,
+            selectionHandleColor: AppColor.cursorColor,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            fillColor: AppColor.textFieldBackColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          buttonTheme: const ButtonThemeData(
+            buttonColor: AppColor.buttonColor
+          )
         ),
         initialRoute: SplashScreen.pageName,
         onGenerateRoute: generateRoute,

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/module/access_page/view/access_page.dart';
 import 'package:food_app/module/customer/dashbord/view/dashboard_page.dart';
+import 'package:food_app/module/customer/sign_in/view/sign_in_page.dart';
+import 'package:food_app/module/customer/sign_up/view/sign_up_page.dart';
 import 'package:food_app/module/splash_screen_page/view/splash_screen.dart';
 
 Route<dynamic>? generateRoute(RouteSettings routeSettings) {
@@ -17,6 +19,12 @@ Route<dynamic>? generateRoute(RouteSettings routeSettings) {
       );
     case DashboardPage.pageName:
       return CupertinoPageRoute(builder: (context) => const DashboardPage());
+
+    case SignInPage.pageName:
+      return CupertinoPageRoute(builder: (context) => const SignInPage());
+
+    case SignUpPage.pageName:
+      return CupertinoPageRoute(builder: (context) => const SignUpPage());
   }
   return null;
 }
