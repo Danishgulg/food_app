@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_app/data/enum/user_type_enum.dart';
 import 'package:food_app/module/access_page/widget/selection_mode_button.dart';
 import 'package:food_app/module/customer/sign_in/view/sign_in_page.dart';
 import 'package:food_app/widgets/wavy_animated_text.dart';
+import 'package:food_app/provider/credential_provider/typeof_user.dart';
 
 class SelectionModeContainer extends StatelessWidget {
   const SelectionModeContainer({super.key});
@@ -39,11 +42,15 @@ class SelectionModeContainer extends StatelessWidget {
             SizedBox(
               height: screenHeight * 0.1,
             ),
-            SelectModeButton(
-              text: "Customer",
-              event: () {
-                Navigator.of(context).pushNamed(SignInPage.pageName);
-              },
+            Consumer(
+              builder: (context, ref, child) => 
+               SelectModeButton(
+                text: "Customer",
+                event: () {
+                  ref.read(typeOfUser.notifier).state = UserTypeEnum.customer;
+                  Navigator.of(context).pushNamed(SignInPage.pageName);
+                },
+              ),
             ),
           ],
         ),
