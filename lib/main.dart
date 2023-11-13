@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/data/colors/app_color.dart';
 import 'package:food_app/firebase_options.dart';
-import 'package:food_app/module/customer/home/bloc/home_food_tab_bloc.dart';
+import 'package:food_app/module/customer/home/bloc/food_data/food_data_bloc.dart';
+import 'package:food_app/module/customer/home/bloc/food_tab/home_food_tab_bloc.dart';
 import 'package:food_app/module/customer/sign_up/bloc/PasswordField/password_field_bloc.dart';
 import 'package:food_app/module/customer/sign_up/bloc/check_password/check_password_field_bloc.dart';
 import 'package:food_app/module/customer/sign_up/bloc/save_credentials/save_cradentials_bloc.dart';
@@ -50,6 +51,12 @@ class MyApp extends StatelessWidget {
 
         BlocProvider(
           create: (context) => SaveCradentialsBloc(),
+        ),
+
+        //home page food tab
+
+        BlocProvider(
+          create: (context) => FoodDataBloc(),
         )
       ],
       child: ProviderScope(

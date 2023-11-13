@@ -66,6 +66,7 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://flutter-fire-9e9db-default-rtdb.firebaseio.com',
     storageBucket: 'flutter-fire-9e9db.appspot.com',
     androidClientId: '465204089341-5bqjb35ripldgcjo1rit9q4pnsirmvhv.apps.googleusercontent.com',
+    iosClientId: '465204089341-uckdh9rsktsbmresptj9vgsrn93ktd23.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodApp',
   );
 }

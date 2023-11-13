@@ -29,6 +29,7 @@ class CustomFoodTabs extends StatelessWidget {
               width: screenWidth * 0.3,
               height: screenHeight * 0.12,
               child: Column(children: [
+                /// custom designed tabs
                 FittedBox(
                   child: Text(text,
                       style: TextStyle(
