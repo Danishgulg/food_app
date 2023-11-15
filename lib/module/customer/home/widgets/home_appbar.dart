@@ -14,21 +14,23 @@ class HomeAppBar extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(top: screenHeight * 0.03),
-      child: Row(
-        children: [
-          IconButton(
-              onPressed: () {
-                drawerAnimationController.forward();
-              },
-              icon: Icon(
-                Icons.clear_all_outlined,
-                size: screenHeight * 0.06,
-              )),
-          Text(
-            "Break Fast",
-            style: TextStyle(fontSize: screenWidth * 0.055),
-          ),
-        ],
+      child: SizedBox(
+        child: Row(
+          children: [
+            IconButton(
+                onPressed: () {
+                  drawerAnimationController.forward();
+                },
+                icon: Icon(
+                  Icons.clear_all_outlined,
+                  size: screenHeight * 0.06,
+                )),
+            Text(
+              "Break Fast",
+              style: TextStyle(fontSize: screenWidth * 0.055),
+            ),
+          ],
+        ),
       ),
     );
   }

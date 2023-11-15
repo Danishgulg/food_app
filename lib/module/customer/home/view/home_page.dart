@@ -1,6 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/data/constants/firebase_firestore_constants.dart';
+import 'package:food_app/module/customer/home/bloc/food_data/food_data_bloc.dart';
 import 'package:food_app/module/customer/home/widgets/drawer.dart';
 import 'package:food_app/module/customer/home/widgets/top_homepage_widget.dart';
 
@@ -23,6 +26,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
+
+    context.read<FoodDataBloc>().add(FetchFoodDataEvent(FirebaseFirestoreConstants.burgerFood));
+
     _homePageController = PageController();
     _searchTextEditingController = TextEditingController();
     _animationController = AnimationController(

@@ -28,7 +28,11 @@ Route<dynamic>? generateRoute(RouteSettings routeSettings) {
         return const DashboardPage();
       });
     case HomePage.pageName:
-      return CupertinoPageRoute(builder: (context) => const HomePage());
+      return CupertinoPageRoute( builder: (context){ 
+        context.read<FoodDataBloc>().add(
+            const FetchFoodDataEvent(FirebaseFirestoreConstants.burgerFood));
+        return const HomePage();
+      });
 
     case SignInPage.pageName:
       return CupertinoPageRoute(builder: (context) => const SignInPage());

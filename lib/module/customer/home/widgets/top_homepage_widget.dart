@@ -35,49 +35,56 @@ class HomeTopPageWidget extends StatelessWidget {
               animationController.reverse();
             }
           },
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              children: [
-                HomeAppBar(drawerAnimationController: animationController),
-                BlocBuilder<HomeFoodTabBloc, HomeFoodTabDataState>(
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        CustomFoodTabs(
-                          selected: state.foodSelected,
-                          text: "Food",
-                          event: () {
-                            context
-                                .read<HomeFoodTabBloc>()
-                                .add(FoodSelectedEvent());
-
-                            homePageController.animateToPage(0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeInOut);
-                          },
+          child: SafeArea(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  HomeAppBar(drawerAnimationController: animationController),
+                  BlocBuilder<HomeFoodTabBloc, HomeFoodTabDataState>(
+                    builder: (context, state) {
+                      return Expanded(
+                        flex: 2,
+                        child: Row(
+                          children: [
+                            CustomFoodTabs(
+                              selected: state.foodSelected,
+                              text: "Food",
+                              event: () {
+                                context
+                                    .read<HomeFoodTabBloc>()
+                                    .add(FoodSelectedEvent());
+                        
+                                homePageController.animateToPage(0,
+                                    duration: const Duration(milliseconds: 500),
+                                    curve: Curves.easeInOut);
+                              },
+                            ),
+                            CustomFoodTabs(
+                              selected: !state.foodSelected,
+                              text: "Offer",
+                              event: () {
+                                context
+                                    .read<HomeFoodTabBloc>()
+                                    .add(OfferSelectedEvent());
+                        
+                                homePageController.animateToPage(1,
+                                    duration: const Duration(milliseconds: 700),
+                                    curve: Curves.easeIn);
+                              },
+                            ),
+                          ],
                         ),
-                        CustomFoodTabs(
-                          selected: !state.foodSelected,
-                          text: "Offer",
-                          event: () {
-                            context
-                                .read<HomeFoodTabBloc>()
-                                .add(OfferSelectedEvent());
+                      );
+                    },
+                  ),
 
-                            homePageController.animateToPage(1,
-                                duration: const Duration(milliseconds: 700),
-                                curve: Curves.easeIn);
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                HomeCustomPageView(
-                  pageController: homePageController,
-                )
-              ],
+                  /// home page
+                  HomeCustomPageView(
+                    pageController: homePageController,
+                  )
+                ],
+              ),
             ),
           ),
         ),

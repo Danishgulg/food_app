@@ -25,13 +25,15 @@ class FoodDataBloc extends Bloc<FetchFoodDataEvent, FoodDataState> {
   });
   }
 
-  void _fetchData(event, emit) {
+  void _fetchData(event, emit) async{
     emit(FoodDataLoadingState());
 
     try {
-      _firebaseFoodHelper
-          .getFoodData(foodName: event.foodType)
-          .then((value) => emit(FoodDataLoadedState(value)));
+      final data = await _firebaseFoodHelper
+          .getFoodData(foodName: event.foodType);
+
+      emit(FoodDataLoadedState(data));
+          
     } on FirebaseException catch (e) {
       emit(FoodDataErrorState(
           errorMessage: e.message, stackTrace: e.stackTrace));

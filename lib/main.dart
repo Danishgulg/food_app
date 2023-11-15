@@ -57,7 +57,10 @@ class MyApp extends StatelessWidget {
 
         BlocProvider(
           create: (context) => FoodDataBloc(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => HomeFoodTabBloc(),
+        ),
       ],
       child: ProviderScope(
         child: MaterialApp(

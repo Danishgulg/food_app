@@ -33,7 +33,7 @@ class _DashboardPageState extends State<DashboardPage> {
           padding: EdgeInsets.only(bottom: screenHeight * 0.02),
           child: Container(
             width: screenWidth * 0.8,
-            height: kBottomNavigationBarHeight,
+            height: kBottomNavigationBarHeight * 0.8,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Color.fromARGB(32, 12, 53, 86)),

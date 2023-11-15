@@ -15,6 +15,8 @@ class FirebaseFoodhelper {
   Future<List<FoodDataModel?>> getFoodData({required String foodName}) {
     List<FoodDataModel> foodList = [];
 
+    print(":::::::::::::;;;;;;;;;;;;;;;;;;;;");
+
     try {
       _dbInstance
           .collection(FirebaseFirestoreConstants.foodCategory)

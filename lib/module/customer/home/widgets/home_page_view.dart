@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/data/formats/character_input_format.dart';
 import 'package:food_app/module/customer/home/bloc/food_data/food_data_bloc.dart';
+import 'package:food_app/module/customer/home/bloc/food_tab/home_food_tab_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,21 +17,25 @@ class HomeCustomPageView extends StatelessWidget {
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
 
-    return SizedBox(
-      width: screenWidth * 0.9,
-      height: screenHeight * 0.4,
-      child: PageView(
-        controller: pageController,
-        children: [
-          Column(
-            children: [FoodSidePage()],
-          ),
-          Container(
-            height: screenHeight * 0.2,
-            width: screenWidth * 0.9,
-            color: Colors.amber,
-          )
-        ],
+    return Center(
+      child: SizedBox(
+        height: screenHeight * 0.6,
+        width: screenWidth,
+        child: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+         
+          children: [
+            Column(
+              children: [FoodSidePage()],
+            ),
+            Container(
+              height: screenHeight * 0.2,
+              width: screenWidth * 0.9,
+              color: Colors.amber,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -40,8 +46,7 @@ class FoodSidePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-     final screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.of(context).size;
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
 
@@ -62,43 +67,28 @@ class FoodSidePage extends StatelessWidget {
 
         /// Food List
 
-        BlocBuilder<FoodDataBloc, FoodDataState>( builder: (context, state) {
-          if (state is FoodDataInitial) {
+        BlocBuilder<FoodDataBloc, FoodDataState>(builder: (context, state) {
+          if (state is FoodDataLoadedState) {
             return SizedBox(
-              height: screenHeight * 0.6,
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return const FoodLoadingContainer();
-                  }),
-            );
-          } else if (state is FoodDataLoadingState) {
-            return SizedBox(
-              height: screenHeight * 0.6,
-              child: ListView.builder(
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return const FoodLoadingContainer();
-                  }),
-            );
-          } else if (state is FoodDataLoadedState) {
-            return SizedBox(
-              height: screenHeight * 0.6,
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.52,
               child: ListView.builder(
                 itemCount: state.foodList.length,
-                itemBuilder: (context, index) {
-                  return FoodContainer(
-                    text: state.foodList[index]?.name ?? "Error",
-                    price: state.foodList[index]?.price ?? "Error",
-                  );
-                },
+                itemBuilder: (context, index) => FoodContainer(
+                    text: state.foodList[index]?.name ?? 'Error',
+                    price: state.foodList[index]?.price ?? 'Errer'),
               ),
             );
-          } else if (state is FoodDataErrorState) {
-            return Text(state.errorMessage ?? "Error");
+          } else {
+            return  SizedBox(
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.52,
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) => FoodLoadingContainer()
+              ),
+            );
           }
-          return Container();
-         
         })
       ],
     );
@@ -130,16 +120,18 @@ class FoodContainer extends StatelessWidget {
                   blurRadius: 5,
                   offset: const Offset(5, 10),
                   color: Colors.grey.shade300)
-            ]),
+            ], borderRadius: const BorderRadius.all(Radius.circular(20))),
             child: Column(
               children: [
+
+                SizedBox(height: screenHeight * 0.05),
                 /// text for food name
                 Text(
                   text,
                   style: TextStyle(
                       fontSize: screenWidth * 0.05,
                       color: Colors.black,
-                      fontFamily: GoogleFonts.abel().fontFamily),
+                      fontFamily: GoogleFonts.aDLaMDisplay().fontFamily),
                 ),
 
                 ///text for price
@@ -148,7 +140,7 @@ class FoodContainer extends StatelessWidget {
                   style: TextStyle(
                       fontSize: screenWidth * 0.05,
                       color: Colors.orange.shade900,
-                      fontFamily: GoogleFonts.abel().fontFamily),
+                      fontFamily: GoogleFonts.notoSansIndicSiyaqNumbers().fontFamily),
                 ),
               ],
             ),
@@ -157,7 +149,7 @@ class FoodContainer extends StatelessWidget {
             left: screenWidth * 0.5,
             child: SizedBox(
                 width: screenWidth * 0.4,
-                height: screenHeight * 0.25,
+                height: screenHeight * 0.3,
                 child: Image.asset('assets/images/pizza.png')),
           )
         ],
