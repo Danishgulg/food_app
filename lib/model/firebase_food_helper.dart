@@ -6,28 +6,26 @@ class FirebaseFoodhelper {
   final FirebaseFirestore _dbInstance = FirebaseFirestore.instance;
   void storeFoodData(
       {required String foodName, required List<String> foodData}) async {
-    _dbInstance
+    await _dbInstance
         .collection(FirebaseFirestoreConstants.foodCategory)
         .doc(foodName)
         .set({"data": foodData});
   }
 
-  Future<List<FoodDataModel?>> getFoodData({required String foodName}) {
+  Future<List<FoodDataModel>> getFoodData({required String foodName}) async {
     List<FoodDataModel> foodList = [];
 
-    print(":::::::::::::;;;;;;;;;;;;;;;;;;;;");
-
     try {
-      _dbInstance
+      await _dbInstance
           .collection(FirebaseFirestoreConstants.foodCategory)
           .doc(foodName)
           .get()
           .then((value) {
-            final collection = value.data()!['data'];
-            for (var element  in collection) {
-              foodList.add(FoodDataModel.fromMap(element));
-            }
-        return foodList;
+        final collection = value.data()!['data'];
+        for (var element in collection) {
+          foodList.add(FoodDataModel.fromMap(element));
+        }
+        return foodList.reversed;
       });
     } on FirebaseException catch (e) {
       // ignore: avoid_print
@@ -36,4 +34,31 @@ class FirebaseFoodhelper {
     return Future.value(foodList);
   }
 
+  Future<bool> updateLikedFood(
+      {required String foodName, required Map mapToUpdate}) async {
+
+    final ref = _dbInstance
+        .collection(FirebaseFirestoreConstants.foodCategory)
+        .doc(foodName);
+
+    try {
+      await ref.update({
+        "data": FieldValue.arrayRemove([mapToUpdate])
+      });
+      if(mapToUpdate['liked'] == false){
+        mapToUpdate['liked'] = true;
+      }else if(mapToUpdate['liked'] == true){
+        mapToUpdate['liked'] = false;
+      }
+      ref.update(
+        {
+          "data": FieldValue.arrayUnion([mapToUpdate])
+        }
+      );
+      return Future.value(true);
+    } on FirebaseException catch (e) {
+      // ignore: avoid_print
+      return Future.value(false);
+    }
+  }
 }

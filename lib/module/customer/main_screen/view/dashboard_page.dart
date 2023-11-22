@@ -1,5 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_app/data/constants/firebase_firestore_constants.dart';
+import 'package:food_app/module/customer/favorite_list_page/view/pavorite_list_page.dart';
+import 'package:food_app/module/customer/home/bloc/food_data/food_data_bloc.dart';
 import 'package:food_app/module/customer/home/view/home_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -13,6 +16,12 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPageState extends State<DashboardPage> {
   int _currentIndex = 0;
+  
+  @override
+  void initState() {
+    context.read<FoodDataBloc>().add(const FetchFoodDataAddEvent(FirebaseFirestoreConstants.burgerFood));
+    super.initState();
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -36,7 +45,7 @@ class _DashboardPageState extends State<DashboardPage> {
             height: kBottomNavigationBarHeight * 0.8,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Color.fromARGB(32, 12, 53, 86)),
+                color: const Color.fromARGB(32, 12, 53, 86)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -48,7 +57,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   onPressed: () => _onTabTapped(0),
                 ),
                 IconButton(
-                  icon: Icon(Icons.bar_chart,
+                  icon: Icon(Icons.favorite,
                       color: _currentIndex == 1
                           ? Colors.orange.shade300
                           : Colors.grey),
@@ -74,16 +83,14 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         body: IndexedStack(
           index: _currentIndex,
-          children: const [
-            HomePage(),
+          children:  const[
+             HomePage(),
             //  Scaffold(backgroundColor: Colors.amber,),
-            Scaffold(
-              backgroundColor: Colors.cyan,
-            ),
+             FavoriteListPage(),
             Scaffold(
               backgroundColor: Colors.green,
             ),
-            Scaffold(
+             Scaffold(
               backgroundColor: Colors.green,
             )
           ],
