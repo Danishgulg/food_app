@@ -12,6 +12,7 @@ class HomeAppBar extends StatelessWidget {
     final screenHeight = screenSize.height;
     final screenWidth = screenSize.width;
 
+    //tabs of food and Offers
     return Padding(
       padding: EdgeInsets.only(top: screenHeight * 0.03),
       child: SizedBox(

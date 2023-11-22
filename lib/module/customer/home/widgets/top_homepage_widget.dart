@@ -54,7 +54,7 @@ class HomeTopPageWidget extends StatelessWidget {
                                 context
                                     .read<HomeFoodTabBloc>()
                                     .add(FoodSelectedEvent());
-                        
+
                                 homePageController.animateToPage(0,
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeInOut);
@@ -67,7 +67,7 @@ class HomeTopPageWidget extends StatelessWidget {
                                 context
                                     .read<HomeFoodTabBloc>()
                                     .add(OfferSelectedEvent());
-                        
+
                                 homePageController.animateToPage(1,
                                     duration: const Duration(milliseconds: 700),
                                     curve: Curves.easeIn);

@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
 
-    context.read<FoodDataBloc>().add(FetchFoodDataEvent(FirebaseFirestoreConstants.burgerFood));
+    context.read<FoodDataBloc>().add(const FetchFoodDataAddEvent(FirebaseFirestoreConstants.burgerFood));
 
     _homePageController = PageController();
     _searchTextEditingController = TextEditingController();
@@ -52,10 +52,15 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    //  final screenSize = MediaQuery.of(context).size;
+    // final screenHeight = screenSize.height;
+    // final screenWidth = screenSize.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
+
+          
           // drawer
 
           const DrawerWidget(),
@@ -68,7 +73,9 @@ class _HomePageState extends State<HomePage>
             scaleAnimation: _scaleAnimation,
             positionAnimation: _positionAnimation,
             searchTextEditingController: _searchTextEditingController,
-          )
+          ),
+           
+
         ],
       ),
     );

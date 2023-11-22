@@ -2,18 +2,22 @@
 import 'dart:convert';
 
 class FoodDataModel {
+  bool liked;
   String name;
   String price;
   FoodDataModel({
+    required this.liked,
     required this.name,
     required this.price,
   });
 
   FoodDataModel copyWith({
+    bool? liked,
     String? name,
     String? price,
   }) {
     return FoodDataModel(
+      liked: liked ?? this.liked,
       name: name ?? this.name,
       price: price ?? this.price,
     );
@@ -21,6 +25,7 @@ class FoodDataModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'liked': liked,
       'name': name,
       'price': price,
     };
@@ -28,6 +33,7 @@ class FoodDataModel {
 
   factory FoodDataModel.fromMap(Map<String, dynamic> map) {
     return FoodDataModel(
+      liked: map['liked'] as bool,
       name: map['name'] as String,
       price: map['price'] as String,
     );
@@ -35,20 +41,20 @@ class FoodDataModel {
 
   String toJson() => json.encode(toMap());
 
-  factory FoodDataModel.fromJson(String source) => FoodDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FoodDataModel.fromJson(String source) =>
+      FoodDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'FoodDataModel(name: $name, price: $price)';
+  String toString() =>
+      'FoodDataModel(liked: $liked, name: $name, price: $price)';
 
   @override
   bool operator ==(covariant FoodDataModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      other.price == price;
+
+    return other.liked == liked && other.name == name && other.price == price;
   }
 
   @override
-  int get hashCode => name.hashCode ^ price.hashCode;
+  int get hashCode => liked.hashCode ^ name.hashCode ^ price.hashCode;
 }
